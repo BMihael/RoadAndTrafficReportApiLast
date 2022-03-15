@@ -1,7 +1,9 @@
 package com.example.ratra.controller;
 
 import com.example.ratra.model.Submit;
+import com.example.ratra.model.form.DeleteImageForm;
 import com.example.ratra.model.form.SubmitFormWithType;
+import com.example.ratra.service.impl.ImageServiceImpl;
 import com.example.ratra.service.impl.SubmitServiceImpl;
 import com.example.ratra.util.ApiUrl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +21,26 @@ public class SubmitController {
     @Autowired
     SubmitServiceImpl submitService;
 
+    @Autowired
+    ImageServiceImpl imageService;
+
     @RequestMapping("/submits")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity getSubmitsForUser(@RequestParam(defaultValue = "0") Integer pageNumber,
+    public ResponseEntity getSubmitsByUser(@RequestParam(defaultValue = "0") Integer pageNumber,
                                             @RequestParam(defaultValue = "1") Integer pageSize,
                                             @RequestParam(defaultValue = "id") String sortBy,
                                             @RequestParam(defaultValue = "asc") String direction) {
-        return ResponseEntity.ok(submitService.getSubmitsForUser(pageNumber, pageSize, sortBy, direction));
+        return ResponseEntity.ok(submitService.getSubmitsByUser(pageNumber, pageSize, sortBy, direction));
+    }
+
+    @RequestMapping("/submitsByUser")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity getSubmitsByUser(@RequestParam String name,
+                                           @RequestParam(defaultValue = "0") Integer pageNumber,
+                                           @RequestParam(defaultValue = "1") Integer pageSize,
+                                           @RequestParam(defaultValue = "id") String sortBy,
+                                           @RequestParam(defaultValue = "asc") String direction) {
+        return ResponseEntity.ok(submitService.getSubmitsForUser(name, pageNumber, pageSize, sortBy, direction));
     }
 
     @GetMapping("/submit/{id}")
@@ -61,5 +76,13 @@ public class SubmitController {
                                          @RequestPart(value = "files", required = false) MultipartFile[] files) {
         return ResponseEntity.ok(submitService.updateSubmitForm(id, submitForm, files));
     }
+
+    @DeleteMapping(value= "/submit/image/", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity deleteImage(@RequestBody DeleteImageForm image){
+        imageService.deleteImage(image.getId());
+        return ResponseEntity.ok("Image Deleted");
+    }
+
 
 }

@@ -17,4 +17,6 @@ public interface UserService {
     UserSettingsDto updateUserSettings(UserSettingsForm userSettingsForm);
 
     void saveUserProfilePicture(MultipartFile file) throws IOException;
+
+    User getUserByUsername(String name);
 }

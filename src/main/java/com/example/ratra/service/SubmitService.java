@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface SubmitService {
     Submit saveSubmit(SubmitFormWithType submitFormWithType, MultipartFile[] files);
 
-    Page<Submit> getSubmitsForUser(Integer pageNumber, Integer pageSize, String sortBy, String direction);
+    Page<Submit> getSubmitsByUser(Integer pageNumber, Integer pageSize, String sortBy, String direction);
 
     void deleteSubmit(Long id);
 
@@ -17,4 +17,6 @@ public interface SubmitService {
     Integer getSubmitCount();
 
     Submit getById(Long id);
+
+    Page<Submit> getSubmitsForUser(String user, Integer pageNumber, Integer pageSize, String sortBy, String direction);
 }

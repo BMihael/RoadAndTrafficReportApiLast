@@ -66,7 +66,7 @@ public class SubmitServiceImpl implements SubmitService {
     }
 
     @Override
-    public Page<Submit> getSubmitsForUser(Integer pageNumber, Integer pageSize, String sortBy, String direction) {
+    public Page<Submit> getSubmitsByUser(Integer pageNumber, Integer pageSize, String sortBy, String direction) {
         User user = userServiceImpl.getUser();
         Pageable page = PageRequest.of(pageNumber, pageSize, Sort.by(getDirection(direction), sortBy));
         Page<Submit> pagedResult = submitRepository.findSubmitsByUserId(user.getId(), page);
@@ -128,5 +128,12 @@ public class SubmitServiceImpl implements SubmitService {
         return submitRepository.findById(id).orElseThrow(() -> new SubmitNotFoundException("Submit not found!"));
     }
 
+    @Override
+    public Page<Submit> getSubmitsForUser(String username, Integer pageNumber, Integer pageSize, String sortBy, String direction) {
+        User user = userServiceImpl.getUserByUsername(username);
+        Pageable page = PageRequest.of(pageNumber, pageSize, Sort.by(getDirection(direction), sortBy));
+        Page<Submit> pagedResult = submitRepository.findSubmitsByUserId(user.getId(), page);
+        return pagedResult;
+    }
 
 }

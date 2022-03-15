@@ -40,7 +40,16 @@ public class RestExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleSubmitNotFoundException(SubmitNotFoundException exception) {
-        System.out.println("Belko");
+        ErrorResponse error = new ErrorResponse();
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exception.getMessage());
+        error.setTimestamp(System.currentTimeMillis());
+
+        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleImageNotFoundException(ImageNotFoundException exception) {
         ErrorResponse error = new ErrorResponse();
         error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(exception.getMessage());
