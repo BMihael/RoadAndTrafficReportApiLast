@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
+@Table(name="image_files")
 @Data
 public class ImageFile {
 
@@ -17,7 +18,6 @@ public class ImageFile {
     private String type;
 
     @Column
-    @Lob
     private byte[] data;
 
     @JsonBackReference

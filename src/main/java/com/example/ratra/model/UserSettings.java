@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
+@Table(name="users_settings")
 @Data
 public class UserSettings {
 
@@ -27,7 +28,6 @@ public class UserSettings {
     @Column
     private String country;
     @Column
-    @Lob
     private byte[] profilePictureData;
 
     @JsonBackReference
