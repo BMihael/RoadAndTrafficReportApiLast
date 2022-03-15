@@ -6,10 +6,10 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Table(name="submits")
 @Entity
 public class Submit {
 
@@ -38,7 +38,6 @@ public class Submit {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "submit",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    private List<ImageFile> images = new ArrayList<>();
+            cascade = CascadeType.ALL)
+    private List<ImageFile> images;
 }
