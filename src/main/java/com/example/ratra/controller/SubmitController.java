@@ -25,7 +25,7 @@ public class SubmitController {
     ImageServiceImpl imageService;
 
     @RequestMapping("/submits")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity getSubmitsByUser(@RequestParam(defaultValue = "0") Integer pageNumber,
                                             @RequestParam(defaultValue = "1") Integer pageSize,
                                             @RequestParam(defaultValue = "id") String sortBy,
@@ -55,18 +55,12 @@ public class SubmitController {
         return ResponseEntity.ok(submitService.getSubmitCount());
     }
 
-    @PostMapping(value = "/submit/image/new/", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/submit/new", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public void create(
             @RequestPart("submit") SubmitFormWithType submitForm,
             @RequestPart(value = "files", required = false) MultipartFile[] files) {
         submitService.saveSubmit(submitForm, files);
-    }
-
-    @DeleteMapping("/submit/{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public void delete(@PathVariable Long id) {
-        submitService.deleteSubmit(id);
     }
 
     @PutMapping("/submit/{id}")
@@ -77,12 +71,15 @@ public class SubmitController {
         return ResponseEntity.ok(submitService.updateSubmitForm(id, submitForm, files));
     }
 
-    @DeleteMapping(value= "/submit/image/", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @DeleteMapping("/submit/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity deleteImage(@RequestBody DeleteImageForm image){
-        imageService.deleteImage(image.getId());
-        return ResponseEntity.ok("Image Deleted");
+    public void delete(@PathVariable Long id) {
+        submitService.deleteSubmit(id);
     }
 
-
+    @DeleteMapping(value= "/image", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity deleteImage(@RequestBody DeleteImageForm image){
+        return ResponseEntity.ok(imageService.deleteImage(image.getId()));
+    }
 }

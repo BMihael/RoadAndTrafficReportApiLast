@@ -12,11 +12,14 @@ public interface UserService {
 
     void deleteUser();
 
-    UserSettingsDto getUserSettingsDto();
+    UserSettingsDto getUserSettings();
 
     UserSettingsDto updateUserSettings(UserSettingsForm userSettingsForm);
 
     void saveUserProfilePicture(MultipartFile file) throws IOException;
 
-    User getUserByUsername(String name);
+    User getUserByUsername(String username);
+
+    void deleteUserById(Long id);
+
 }

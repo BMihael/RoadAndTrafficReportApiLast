@@ -1,6 +1,6 @@
 package com.example.ratra.exception;
 
-public class EmailIsAlreadyTakenException extends RuntimeException {
+public class EmailIsAlreadyTakenException extends BaseException {
     public EmailIsAlreadyTakenException() {
     }
 

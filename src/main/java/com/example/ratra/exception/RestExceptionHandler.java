@@ -5,8 +5,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.nio.file.AccessDeniedException;
+
 @ControllerAdvice
 public class RestExceptionHandler {
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleLocationNotFoundException(LocationNotFoundException exception){
+        ErrorResponse error = new ErrorResponse();
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exception.getMessage());
+        error.setTimestamp(System.currentTimeMillis());
+
+        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException exception){
+        ErrorResponse error = new ErrorResponse();
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exception.getMessage());
+        error.setTimestamp(System.currentTimeMillis());
+
+        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleUsernameIsAlreadyTakenException(UsernameIsAlreadyTakenException exception) {

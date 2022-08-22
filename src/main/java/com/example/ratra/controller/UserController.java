@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 
 @Slf4j
@@ -30,16 +29,28 @@ public class UserController {
         return ResponseEntity.ok(userServiceImpl.getUser());
     }
 
+    @RequestMapping("/user/{username}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(userServiceImpl.getUserByUsername(username));
+    }
+
     @RequestMapping("/user/delete")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public void deleteUser() {
         userServiceImpl.deleteUser();
     }
 
+    @RequestMapping("/user/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void deleteUserById(@PathVariable Long id) {
+        userServiceImpl.deleteUserById(id);
+    }
+
     @RequestMapping("/user/settings")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<UserSettingsDto> getUserSettings() {
-        return ResponseEntity.ok(userServiceImpl.getUserSettingsDto());
+        return ResponseEntity.ok(userServiceImpl.getUserSettings());
     }
 
     @PutMapping("/user/settings")

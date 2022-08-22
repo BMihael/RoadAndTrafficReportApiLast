@@ -3,6 +3,7 @@ package com.example.ratra.service.impl;
 import com.example.ratra.exception.SubmitNotFoundException;
 import com.example.ratra.mapper.MapStructMapper;
 import com.example.ratra.model.ImageFile;
+import com.example.ratra.model.Location;
 import com.example.ratra.model.Submit;
 import com.example.ratra.model.User;
 import com.example.ratra.model.form.SubmitFormWithType;
@@ -36,6 +37,9 @@ public class SubmitServiceImpl implements SubmitService {
     @Autowired
     MapStructMapper mapStructMapper;
 
+    @Autowired
+    LocationServiceImpl locationService;
+
     @Override
     public Submit saveSubmit(SubmitFormWithType submitFormWithType, MultipartFile[] files) {
         User user = userServiceImpl.getUser();
@@ -46,19 +50,23 @@ public class SubmitServiceImpl implements SubmitService {
         if (files != null) {
             List<ImageFile> images = new ArrayList<>();
             Arrays.stream(files).forEach(file -> {
-                ImageFile image = new ImageFile();
-                image.setSubmit(submit);
-                try {
-                    image.setType(file.getContentType());
-                    image.setData(file.getBytes());
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(!file.getOriginalFilename().equals("")) {
+                    ImageFile image = new ImageFile();
+                    image.setSubmit(submit);
+                    try {
+                        image.setType(file.getContentType());
+                        image.setData(file.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    images.add(image);
                 }
-                images.add(image);
             });
-            submit.setImages(images);
-        } else {
-            submit.setImages(null);
+            if (!(images.isEmpty())) {
+                submit.setImages(images);
+            } else {
+                submit.setImages(null);
+            }
         }
 
         log.info("Saving submit to database");
@@ -94,26 +102,36 @@ public class SubmitServiceImpl implements SubmitService {
         submit.setTitle(submitFormWithType.getTitle());
         submit.setDescription(submitFormWithType.getDescription());
         submit.setType(submitFormWithType.getType());
-        submit.setLocation(submitFormWithType.getLocation());
+
+        Location location = locationService.getLocationBySubmitId(submit.getId());
+
+        location.setLatitude(submitFormWithType.getLocation().getLatitude());
+        location.setLongitude(submitFormWithType.getLocation().getLongitude());
+
+        submit.setLocation(location);
 
         if (files != null) {
             List<ImageFile> images = new ArrayList<>();
             Arrays.stream(files).forEach(file -> {
-                ImageFile image = new ImageFile();
-                image.setSubmit(submit);
-                try {
-                    image.setType(file.getContentType());
-                    image.setData(file.getBytes());
-                    ///image.setSubmit(submit); Ovo sam stavio kada sam napisao za donji todo
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(!file.getOriginalFilename().equals("")){
+                    ImageFile image = new ImageFile();
+                    image.setSubmit(submit);
+                    try {
+                        image.setType(file.getContentType());
+                        image.setData(file.getBytes());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    images.add(image);
                 }
-                images.add(image);
             });
-            submit.setImages(images);
-        }
 
-        //TODO: ovdje se baca null negdje, mislim da je zbog referenci submita i slika
+            if (!(images.isEmpty())) {
+                submit.setImages(images);
+            } else {
+                submit.setImages(null);
+            }
+        }
         return submitRepository.save(submit);
     }
 

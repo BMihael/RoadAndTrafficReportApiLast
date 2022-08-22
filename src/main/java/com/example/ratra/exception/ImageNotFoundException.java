@@ -1,6 +1,6 @@
 package com.example.ratra.exception;
 
-public class ImageNotFoundException extends RuntimeException{
+public class ImageNotFoundException extends BaseException {
     public ImageNotFoundException() {
     }
 

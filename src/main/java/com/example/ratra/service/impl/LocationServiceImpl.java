@@ -1,5 +1,7 @@
 package com.example.ratra.service.impl;
 
+import com.example.ratra.exception.LocationNotFoundException;
+import com.example.ratra.exception.RoleNotFoundException;
 import com.example.ratra.mapper.MapStructMapper;
 import com.example.ratra.model.Location;
 import com.example.ratra.model.dto.LocationDto;
@@ -36,5 +38,10 @@ public class LocationServiceImpl implements LocationService {
 
         log.info("Sending locations");
         return locationDtos;
+    }
+
+    @Override
+    public Location getLocationBySubmitId(Long id) {
+        return repository.findById(id).orElseThrow(() -> new LocationNotFoundException("Location with given id not found!"));
     }
 }

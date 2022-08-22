@@ -1,6 +1,6 @@
 package com.example.ratra.exception;
 
-public class RoleNotFoundException extends RuntimeException {
+public class RoleNotFoundException extends BaseException {
 
     public RoleNotFoundException() {
     }

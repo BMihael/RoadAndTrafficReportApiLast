@@ -1,5 +1,6 @@
 package com.example.ratra.service.impl;
 
+import com.example.ratra.exception.UsernameNotFoundException;
 import com.example.ratra.mapper.MapStructMapper;
 import com.example.ratra.model.User;
 import com.example.ratra.model.UserSettings;
@@ -10,7 +11,6 @@ import com.example.ratra.repository.UserSettingsRepository;
 import com.example.ratra.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -50,7 +50,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserSettingsDto getUserSettingsDto() {
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+
+
+    @Override
+    public UserSettingsDto getUserSettings() {
         User user = user();
         UserSettingsDto userSettingsDto = mapStructMapper.
                 userSettingsToUserSettingsDto(userSettingsRepository.findUserSettingsById(user.getId()));
@@ -80,8 +87,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
+        if(user==null){
+            throw new UsernameNotFoundException("User Not Found with username or email : " + username);
+        }
+       return user;
     }
-
 
 }

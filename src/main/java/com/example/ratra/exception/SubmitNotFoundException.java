@@ -1,6 +1,6 @@
 package com.example.ratra.exception;
 
-public class SubmitNotFoundException extends RuntimeException {
+public class SubmitNotFoundException extends BaseException {
     public SubmitNotFoundException() {
     }
 
