@@ -7,6 +7,7 @@ import com.example.ratra.model.Location;
 import com.example.ratra.model.Submit;
 import com.example.ratra.model.User;
 import com.example.ratra.model.form.SubmitFormWithType;
+import com.example.ratra.model.response.ResponseMessages;
 import com.example.ratra.repository.SubmitRepository;
 import com.example.ratra.service.SubmitService;
 import lombok.extern.slf4j.Slf4j;
@@ -97,7 +98,7 @@ public class SubmitServiceImpl implements SubmitService {
     public Submit updateSubmitForm(Long id, SubmitFormWithType submitFormWithType, MultipartFile[] files) {
         User user = userServiceImpl.getUser();
 
-        Submit submit = submitRepository.findById(id).orElseThrow(() -> new SubmitNotFoundException("Submit not found!"));
+        Submit submit = getById(id);
 
         submit.setTitle(submitFormWithType.getTitle());
         submit.setDescription(submitFormWithType.getDescription());
@@ -143,7 +144,7 @@ public class SubmitServiceImpl implements SubmitService {
 
     @Override
     public Submit getById(Long id) {
-        return submitRepository.findById(id).orElseThrow(() -> new SubmitNotFoundException("Submit not found!"));
+        return submitRepository.findById(id).orElseThrow(() -> new SubmitNotFoundException(ResponseMessages.SUBMIT_NOT_FOUND));
     }
 
     @Override

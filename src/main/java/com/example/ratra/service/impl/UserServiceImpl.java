@@ -6,6 +6,7 @@ import com.example.ratra.model.User;
 import com.example.ratra.model.UserSettings;
 import com.example.ratra.model.dto.UserSettingsDto;
 import com.example.ratra.model.form.UserSettingsForm;
+import com.example.ratra.model.response.ResponseMessages;
 import com.example.ratra.repository.UserRepository;
 import com.example.ratra.repository.UserSettingsRepository;
 import com.example.ratra.service.UserService;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException("Username not found!");
+            throw new UsernameNotFoundException(ResponseMessages.USERNAME_NOT_FOUND);
         }
         return user;
     }

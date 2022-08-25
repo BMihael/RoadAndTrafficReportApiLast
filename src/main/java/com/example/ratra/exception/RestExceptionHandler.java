@@ -1,11 +1,10 @@
 package com.example.ratra.exception;
 
+import com.example.ratra.model.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import java.nio.file.AccessDeniedException;
 
 @ControllerAdvice
 public class RestExceptionHandler {
@@ -17,7 +16,7 @@ public class RestExceptionHandler {
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
@@ -27,7 +26,7 @@ public class RestExceptionHandler {
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
@@ -37,17 +36,17 @@ public class RestExceptionHandler {
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleEmalIsAlreadyTakenException(EmailIsAlreadyTakenException exception) {
+    public ResponseEntity<ErrorResponse> handleEmailIsAlreadyTakenException(EmailIsAlreadyTakenException exception) {
         ErrorResponse error = new ErrorResponse();
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
@@ -57,7 +56,7 @@ public class RestExceptionHandler {
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
@@ -67,7 +66,7 @@ public class RestExceptionHandler {
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
@@ -77,6 +76,6 @@ public class RestExceptionHandler {
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<ErrorResponse>(error, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 }

@@ -5,7 +5,6 @@ import com.example.ratra.model.dto.UserSettingsDto;
 import com.example.ratra.model.form.UserSettingsForm;
 import com.example.ratra.service.impl.UserServiceImpl;
 import com.example.ratra.util.ApiUrl;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
-@Slf4j
 @RestController
 @RequestMapping(ApiUrl.API_PATH)
 @CrossOrigin(origins = "*", maxAge = 3600)
