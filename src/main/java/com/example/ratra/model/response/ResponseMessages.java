@@ -9,6 +9,4 @@ public interface ResponseMessages {
     String IMAGE_NOT_FOUND = "Image not found!";
     String LOCATION_NOT_FOUND = "Location with given id not found!";
     String SUBMIT_NOT_FOUND = "Submit not found!";
-
-    String TEST = "test";
 }
