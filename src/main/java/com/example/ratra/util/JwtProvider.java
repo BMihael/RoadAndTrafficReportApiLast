@@ -1,6 +1,5 @@
 package com.example.ratra.util;
 
-import com.auth0.jwt.algorithms.Algorithm;
 import com.example.ratra.model.UserPrinciple;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -19,28 +18,14 @@ public class JwtProvider {
     @Autowired
     private JwtSecretHolder jwtSecretHolder;
 
-    //private String jwtSecret = "mihael";
-    //private int jwtExpiration = 600;
-
     public String generateJwtToken(Authentication authentication) {
         UserPrinciple userPrincipal = (UserPrinciple) authentication.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes()); //dont do this in production
-
-        /*
-        String token = JWT.create()
-                .withSubject(userPrincipal.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+10*60*1000))
-                .withClaim("roles",userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-                .sign(algorithm);
-
-        return token;
-        */
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setHeaderParam("typ",Header.JWT_TYPE)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtSecretHolder.getExpiration() * 1000)) // ovo su sekunde
+                .setExpiration(new Date((new Date()).getTime() + jwtSecretHolder.getExpiration() * 1000L)) // ovo su sekunde
                 .signWith(SignatureAlgorithm.HS512, jwtSecretHolder.getSecret())
                 .compact();
     }
