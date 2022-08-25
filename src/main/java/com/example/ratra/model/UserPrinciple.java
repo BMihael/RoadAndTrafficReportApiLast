@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class UserPrinciple implements UserDetails {
 
-    private Long id;
-    private String name;
-    private String username;
-    private String email;
-    private String password;
-    private Collection authorities;
+    private final Long id;
+    private final String name;
+    private final String username;
+    private final String email;
+    private final String password;
+    private final Collection authorities;
 
     public UserPrinciple(Long id, String name,
                          String username, String email, String password,
