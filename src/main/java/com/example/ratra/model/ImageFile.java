@@ -6,8 +6,8 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name="image_files")
 @Data
+@Table(name="image_files")
 public class ImageFile {
 
     @Id

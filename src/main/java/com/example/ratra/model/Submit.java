@@ -8,9 +8,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 @Data
 @Table(name="submits")
-@Entity
 public class Submit {
 
     @Id
