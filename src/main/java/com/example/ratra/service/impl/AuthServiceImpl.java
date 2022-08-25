@@ -8,7 +8,9 @@ import com.example.ratra.model.User;
 import com.example.ratra.model.UserSettings;
 import com.example.ratra.model.form.LoginForm;
 import com.example.ratra.model.form.RegisterForm;
+import com.example.ratra.model.response.GenericResponse;
 import com.example.ratra.model.response.JwtResponse;
+import com.example.ratra.model.response.ResponseMessages;
 import com.example.ratra.repository.RoleRepository;
 import com.example.ratra.repository.UserRepository;
 import com.example.ratra.service.AuthService;
@@ -44,7 +46,7 @@ public class AuthServiceImpl implements AuthService {
     PasswordEncoder encoder;
 
     @Override
-    public JwtResponse autenticate(LoginForm loginForm){
+    public JwtResponse authenticate(LoginForm loginForm) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginForm.getUsername(),
@@ -58,12 +60,12 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String register(RegisterForm registerForm){
+    public GenericResponse register(RegisterForm registerForm) {
         if (userRepository.existsByUsername(registerForm.getUsername())) {
-            throw new UsernameIsAlreadyTakenException("Username already taken!");
+            throw new UsernameIsAlreadyTakenException(ResponseMessages.USERNAME_TAKEN);
         }
         if (userRepository.existsByEmail(registerForm.getEmail())) {
-            throw new EmailIsAlreadyTakenException("Email already taken!");
+            throw new EmailIsAlreadyTakenException(ResponseMessages.EMAIL_TAKEN);
         }
 
         User user = new User();
@@ -97,8 +99,6 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.save(user);
 
-        return "User registered successfully!";
+        return new GenericResponse(ResponseMessages.USER_REGISTER_SUCCESSFULLY);
     }
-
-
 }
