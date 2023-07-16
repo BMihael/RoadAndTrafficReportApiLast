@@ -16,7 +16,8 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     public GenericResponse deleteImage(Long id) {
-        imageRepository.findById(id).orElseThrow(() -> new ImageNotFoundException(ResponseMessages.IMAGE_NOT_FOUND));
+        imageRepository.findById(id).orElseThrow(() ->
+                new ImageNotFoundException(ResponseMessages.IMAGE_NOT_FOUND));
         imageRepository.deleteById(id);
         return new GenericResponse(ResponseMessages.IMAGE_DELETED);
     }

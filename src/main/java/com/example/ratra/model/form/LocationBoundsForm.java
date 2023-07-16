@@ -3,7 +3,7 @@ package com.example.ratra.model.form;
 import lombok.Data;
 
 @Data
-public class LocationBounds {
+public class LocationBoundsForm {
     private Double latitudeToNorthWest;
     private Double latitudeFromSouthEast;
 

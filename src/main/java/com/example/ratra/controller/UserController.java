@@ -53,7 +53,8 @@ public class UserController {
 
     @PutMapping("/user/settings")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<UserSettingsDto> updateUserSettings(@RequestBody UserSettingsForm userSettingsForm) {
+    public ResponseEntity<UserSettingsDto> updateUserSettings(
+            @RequestBody UserSettingsForm userSettingsForm) {
         return ResponseEntity.ok(userServiceImpl.updateUserSettings(userSettingsForm));
     }
 

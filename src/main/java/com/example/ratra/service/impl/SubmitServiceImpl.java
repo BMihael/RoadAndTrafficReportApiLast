@@ -49,20 +49,7 @@ public class SubmitServiceImpl implements SubmitService {
         submit.setUser(user);
 
         if (files != null) {
-            List<ImageFile> images = new ArrayList<>();
-            Arrays.stream(files).forEach(file -> {
-                if(!file.getOriginalFilename().equals("")) {
-                    ImageFile image = new ImageFile();
-                    image.setSubmit(submit);
-                    try {
-                        image.setType(file.getContentType());
-                        image.setData(file.getBytes());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    images.add(image);
-                }
-            });
+            List<ImageFile> images = checkImages(files, submit);
             if (!(images.isEmpty())) {
                 submit.setImages(images);
             } else {
@@ -148,11 +135,29 @@ public class SubmitServiceImpl implements SubmitService {
     }
 
     @Override
-    public Page<Submit> getSubmitsForUser(String username, Integer pageNumber, Integer pageSize, String sortBy, String direction) {
+    public Page<Submit> getSubmitsForUser(
+            String username, Integer pageNumber, Integer pageSize, String sortBy, String direction) {
         User user = userServiceImpl.getUserByUsername(username);
         Pageable page = PageRequest.of(pageNumber, pageSize, Sort.by(getDirection(direction), sortBy));
         Page<Submit> pagedResult = submitRepository.findSubmitsByUserId(user.getId(), page);
         return pagedResult;
     }
 
+    private List<ImageFile> checkImages(MultipartFile[] files, Submit submit){
+        List<ImageFile> images = new ArrayList<>();
+        Arrays.stream(files).forEach(file -> {
+            if(!file.getOriginalFilename().equals("")) {
+                ImageFile image = new ImageFile();
+                image.setSubmit(submit);
+                try {
+                    image.setType(file.getContentType());
+                    image.setData(file.getBytes());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                images.add(image);
+            }
+        });
+        return images;
+    }
 }

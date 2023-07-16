@@ -1,5 +1,6 @@
 package com.example.ratra.exception;
 
+import com.example.ratra.ResponseHandler;
 import com.example.ratra.model.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,72 +11,68 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class RestExceptionHandler {
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleLocationNotFoundException(LocationNotFoundException exception){
+    public ResponseEntity<Object> handleLocationNotFoundException(
+            LocationNotFoundException exception) {
         ErrorResponse error = new ErrorResponse();
-        error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return ResponseHandler.generateErrorResponse(HttpStatus.NOT_FOUND, error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException exception){
+    public ResponseEntity<Object> handleUsernameNotFoundException(
+            UsernameNotFoundException exception) {
         ErrorResponse error = new ErrorResponse();
-        error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return ResponseHandler.generateErrorResponse(HttpStatus.NOT_FOUND, error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleUsernameIsAlreadyTakenException(UsernameIsAlreadyTakenException exception) {
+    public ResponseEntity<Object> handleUsernameIsAlreadyTakenException(UsernameIsAlreadyTakenException exception) {
         ErrorResponse error = new ErrorResponse();
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return ResponseHandler.generateErrorResponse(HttpStatus.BAD_REQUEST, error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleEmailIsAlreadyTakenException(EmailIsAlreadyTakenException exception) {
+    public ResponseEntity<Object> handleEmailIsAlreadyTakenException(EmailIsAlreadyTakenException exception) {
         ErrorResponse error = new ErrorResponse();
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return ResponseHandler.generateErrorResponse(HttpStatus.BAD_REQUEST, error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleRoleNotFoundException(RoleNotFoundException exception) {
+    public ResponseEntity<Object> handleRoleNotFoundException(RoleNotFoundException exception) {
         ErrorResponse error = new ErrorResponse();
-        error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return ResponseHandler.generateErrorResponse(HttpStatus.NOT_FOUND, error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleSubmitNotFoundException(SubmitNotFoundException exception) {
+    public ResponseEntity<Object> handleSubmitNotFoundException(SubmitNotFoundException exception) {
         ErrorResponse error = new ErrorResponse();
-        error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return ResponseHandler.generateErrorResponse(HttpStatus.NOT_FOUND, error);
     }
 
     @ExceptionHandler
-    public ResponseEntity<ErrorResponse> handleImageNotFoundException(ImageNotFoundException exception) {
+    public ResponseEntity<Object> handleImageNotFoundException(ImageNotFoundException exception) {
         ErrorResponse error = new ErrorResponse();
-        error.setStatus(HttpStatus.NOT_FOUND.value());
+
         error.setMessage(exception.getMessage());
         error.setTimestamp(System.currentTimeMillis());
 
-        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return ResponseHandler.generateErrorResponse(HttpStatus.NOT_FOUND, error);
     }
 }

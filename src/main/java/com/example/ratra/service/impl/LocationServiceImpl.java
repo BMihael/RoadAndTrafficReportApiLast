@@ -4,7 +4,7 @@ import com.example.ratra.exception.LocationNotFoundException;
 import com.example.ratra.mapper.MapStructMapper;
 import com.example.ratra.model.Location;
 import com.example.ratra.model.dto.LocationDto;
-import com.example.ratra.model.form.LocationBounds;
+import com.example.ratra.model.form.LocationBoundsForm;
 import com.example.ratra.model.response.ResponseMessages;
 import com.example.ratra.repository.LocationRepository;
 import com.example.ratra.service.LocationService;
@@ -25,14 +25,15 @@ public class LocationServiceImpl implements LocationService {
     MapStructMapper mapper;
 
     @Override
-    public List<LocationDto> getLocation(LocationBounds locationBounds) {
-        Double to_latitude = locationBounds.getLatitudeToNorthWest();
-        Double from_latitude = locationBounds.getLatitudeFromSouthEast();
+    public List<LocationDto> getLocation(LocationBoundsForm locationBoundsForm) {
+        Double to_latitude = locationBoundsForm.getLatitudeToNorthWest();
+        Double from_latitude = locationBoundsForm.getLatitudeFromSouthEast();
 
-        Double from_longitude = locationBounds.getLongitudeFromNorthWest();
-        Double to_longitude = locationBounds.getLongitudeToSouthEast();
+        Double from_longitude = locationBoundsForm.getLongitudeFromNorthWest();
+        Double to_longitude = locationBoundsForm.getLongitudeToSouthEast();
 
-        List<Location> locations = repository.findLocationsByBounds(to_latitude,from_latitude,from_longitude,to_longitude);
+        List<Location> locations = repository.findLocationsByBounds(
+                to_latitude, from_latitude, from_longitude, to_longitude);
 
         List<LocationDto> locationDtoList = mapper.locationListToLocationDtoList(locations);
 
@@ -42,6 +43,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location getLocationBySubmitId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new LocationNotFoundException(ResponseMessages.LOCATION_NOT_FOUND));
+        return repository.findById(id).orElseThrow(
+                () -> new LocationNotFoundException(ResponseMessages.LOCATION_NOT_FOUND));
     }
 }

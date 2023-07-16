@@ -3,6 +3,7 @@ package com.example.ratra.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name="submits")
 public class Submit {
 

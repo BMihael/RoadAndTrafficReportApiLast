@@ -18,12 +18,12 @@ public class AuthController {
     @Autowired
     AuthServiceImpl authService;
 
-    @RequestMapping(ApiUrl.AUTH + "/signin")
+    @RequestMapping(value = ApiUrl.AUTH + "/signin", method = RequestMethod.POST)
     public ResponseEntity authenticateUser(@Valid @RequestBody LoginForm loginForm) {
         return ResponseEntity.ok(authService.authenticate(loginForm));
     }
 
-    @RequestMapping(ApiUrl.AUTH + "/signup")
+    @RequestMapping(value = ApiUrl.AUTH + "/signup", method = RequestMethod.POST)
     public ResponseEntity registerUser(@Valid @RequestBody RegisterForm registerForm) {
         return ResponseEntity.ok(authService.register(registerForm));
     }

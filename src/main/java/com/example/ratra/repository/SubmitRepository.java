@@ -13,6 +13,6 @@ public interface SubmitRepository extends JpaRepository<Submit, Long> {
     @Query(name = "SELECT s FROM submits s WHERE user_id = :id", nativeQuery = true)
     Page<Submit> findSubmitsByUserId(Long id, Pageable pageable);
 
-    @Query("select count(s.id) from Submit s where s.user.id=?1")
+    @Query("SELECT COUNT(s.id) FROM Submit s WHERE s.user.id=?1")
     Integer countById(Long id);
 }

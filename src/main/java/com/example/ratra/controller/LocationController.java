@@ -1,6 +1,6 @@
 package com.example.ratra.controller;
 
-import com.example.ratra.model.form.LocationBounds;
+import com.example.ratra.model.form.LocationBoundsForm;
 import com.example.ratra.model.dto.LocationDto;
 import com.example.ratra.service.impl.LocationServiceImpl;
 import com.example.ratra.util.ApiUrl;
@@ -20,7 +20,8 @@ public class LocationController {
 
     @PostMapping("/location")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<List<LocationDto>> getLocation(@RequestBody LocationBounds locationBounds) {
-        return ResponseEntity.ok(locationService.getLocation(locationBounds));
+    public ResponseEntity<List<LocationDto>> getLocation(@RequestBody LocationBoundsForm locationBoundsForm) {
+
+        return ResponseEntity.ok(locationService.getLocation(locationBoundsForm));
     }
 }

@@ -55,14 +55,11 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-
-
     @Override
     public UserSettingsDto getUserSettings() {
         User user = user();
-        UserSettingsDto userSettingsDto = mapStructMapper.
-                userSettingsToUserSettingsDto(userSettingsRepository.findUserSettingsById(user.getId()));
-        return userSettingsDto;
+        UserSettings userSettings = userSettingsRepository.findUserSettingsById(user.getId());
+        return mapStructMapper.userSettingsToUserSettingsDto(userSettings);
     }
 
     @Override
@@ -89,10 +86,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUsername(String username) {
         User user = userRepository.findByUsername(username);
-        if(user==null){
+        if (user == null) {
             throw new UsernameNotFoundException("User Not Found with username or email : " + username);
         }
-       return user;
+        return user;
     }
 
 }

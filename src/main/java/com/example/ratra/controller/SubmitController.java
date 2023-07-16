@@ -55,7 +55,8 @@ public class SubmitController {
         return ResponseEntity.ok(submitService.getSubmitCount());
     }
 
-    @PostMapping(value = "/submit/new", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/submit/new",
+                consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public void create(
             @RequestPart("submit") SubmitFormWithType submitForm,
