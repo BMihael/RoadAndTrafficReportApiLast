@@ -1,5 +1,6 @@
 package com.example.ratra.controller;
 
+import com.example.ratra.ResponseHandler;
 import com.example.ratra.model.Submit;
 import com.example.ratra.model.form.DeleteImageForm;
 import com.example.ratra.model.form.SubmitFormWithType;
@@ -7,6 +8,7 @@ import com.example.ratra.service.impl.ImageServiceImpl;
 import com.example.ratra.service.impl.SubmitServiceImpl;
 import com.example.ratra.util.ApiUrl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,8 +47,8 @@ public class SubmitController {
 
     @GetMapping("/submit/{id}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<Submit> getSubmit(@PathVariable Long id) {
-        return ResponseEntity.ok(submitService.getById(id));
+    public ResponseEntity<Object> getSubmit(@PathVariable Long id) {
+        return ResponseHandler.generateResponse(submitService.getById(id));
     }
 
     @GetMapping("/submits/count")

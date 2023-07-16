@@ -6,16 +6,16 @@ VALUES
 --user settings
 INSERT INTO users_settings (address, country, email, first_name, last_name, phone, postcode, profile_picture_data)
 VALUES
-('Zagreb', 'Croatia', 'mihael.belko@windowslive.com', 'Mihael', 'Belko', '189618971', '10000', NULL),
+('Zagreb', 'Croatia', 'luka123.ivic@windowslive.com', 'Luka', 'Ivić', '189618971', '10000', NULL),
 ('Osijek', 'Croatia', 'ivan123.peric.123@gmail.com', 'Ivan', 'Perić', '5786456', '31000', NULL),
 ('Rijeka', 'Croatia', 'marko123.markic123@gmail.com', 'Marko', 'Markić', '4554645', '51000', NULL);
 
 --users
 INSERT INTO users (email, name, password, username, user_settings_id)
 VALUES
-('mihael.belko@windowslive.com', NULL, '$2a$10$jrvjSY9dY5yZshkrb2N5oe6uJgFHWsiONwwT46HCS4mTCknKaH2Jy', 'mihael', 1),
-('ivan123.peric.123@gmail.com', NULL, '$2a$10$Zs8Uq5J.PtQMgtAXAO9zcu1wJJRNUmLVYDxso9Ss5E3/bLaaEaZCC', 'ivan', 2),
-('marko123.markic123@gmail.com', NULL, '$2a$10$gReBOrMkbPaYyEvbsjJ5.ucixQZx.1heJ6HlwkCnJbOxvaj/rRCtO', 'marko', 3);
+('luka123.ivic@windowslive.com', NULL, '$2a$10$RpxvkjhkHnzCNn.sNDrQrezVtrnIMI/FAe3TeXUY7o28iNLs/vWDa', 'user123', 1),
+('ivan123.peric.123@gmail.com', NULL, '$2a$10$m40tN/gsDSKnihfKgeVDdeCQCOIWDZYnlJYich1phqa6sp9ML95/y', 'user324', 2),
+('marko123.markic123@gmail.com', NULL, '$2a$10$bl1sGkyqMe8JF6o6jlPI/uI9LsGYGPQu.zoG2IBev5LkfOPNNzB.6', 'user789', 3);
 
 -- user roles
 INSERT INTO users_roles (user_id, roles_id) VALUES(1, 1);
